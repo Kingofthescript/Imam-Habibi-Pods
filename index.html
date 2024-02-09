@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imam Habibi Pods</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .product-box {
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            z-index: 999;
+            color: white;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        /* Improved input styles */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Confirmation Popup styles */
+        #confirmationPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            z-index: 999;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        #confirmationOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Imam Habibi Pods</h1>
+    </header>
+
+    <div class="product-box">
+        <img src="https://media.discordapp.net/attachments/1196883413853020321/1205562771324936222/Esport_game.png?ex=65d8d2d2&is=65c65dd2&hm=e63d92e971090dedd6b7ea83ce23b945d735205106cccdd5bee2239927a5fed9&=&format=webp&quality=lossless&width=565&height=565" alt="Product Image">
+        <h2>Imam Habibi AirPods Pro 2 (With Anc)</h2>
+        <p>The Original Imam Habibi Airpods Pro 2 comes with all features</p>
+        <p>Price: £39.99</p>
+        <p>3 Left Hurry!</p>
+        <p>Supported Payment Types: Paypal, Bank Transfers </p>
+        <button onclick="openPopup()">Order</button>
+    </div>
+
+    <!-- More product listings or other content can be added here -->
+
+    <!-- Popup HTML -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Order Information</h2>
+        <p>These details will be used to contact you. You will receive a friend request from the Habibi Pods account on Discord to complete your order.</p>
+        <form id="orderForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="discordUsername">Discord Username:</label>
+            <input type="text" id="discordUsername" name="discordUsername" required>
+
+            <button type="button" onclick="submitOrder()">Submit</button>
+        </form>
+    </div>
+
+    <!-- Confirmation Popup HTML -->
+    <div class="overlay" id="confirmationOverlay"></div>
+    <div class="popup" id="confirmationPopup">
+        <h2>Order Confirmed</h2>
+        <p>Your data has been sent to the admins of the listing. You will receive a friend request and an email within 6 hours.</p>
+        <span onclick="closeConfirmationPopup()">✅</span>
+    </div>
+
+    <script>
+        function openPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function submitOrder() {
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const discordUsername = document.getElementById('discordUsername').value;
+
+            // Construct embed data
+            const embedData = {
+                title: 'New Order',
+                color: 32768, // Green color
+                fields: [
+                    { name: 'Name', value: name },
+                    { name: 'Email', value: email },
+                    { name: 'Discord Username', value: discordUsername },
+                ],
+            };
+
+            // Send data to Discord webhook
+            fetch('https://discord.com/api/webhooks/1205574822801711184/-W4bC4ymPNGBhiijowtHIgA01WuTo5rSE9BdCGgauQla9dTkJJn-UuWktBLrFUjEjZKi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ embeds: [embedData] }),
+            });
+
+            // Close order popup
+            closePopup();
+
+            // Show confirmation popup
+            document.getElementById('confirmationPopup').style.display = 'block';
+            document.getElementById('confirmationOverlay').style.display = 'block';
+        }
+
+        function closeConfirmationPopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+            document.getElementById('confirmationOverlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
